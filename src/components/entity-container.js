@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Table, Modal, Tooltip, Popconfirm, Icon   } from 'antd';
+import { Table, Modal, Tooltip, Popconfirm, Icon, Button    } from 'antd';
 import AceEditor from 'react-ace';
 
 import 'brace/mode/json';
@@ -27,23 +27,17 @@ class EntityContainer extends Component {
         });
     }
 
-    onEdit(entity){
-        this.setState({ objectSelect:entity,editing: true });
+    onOpen(entity){
+        this.setState({ objectSelect:entity,entityOpen: true });
     }
 
-    handleUpdate = (e) => {
+    handleClose = (e) => {
         console.log(e);
         this.setState({
-            editing: false,
+            entityOpen: false,
         });
     }
     
-    handleCancel = (e) => {
-        console.log(e);
-        this.setState({
-            editing: false,
-        });
-    }
 
     render() { 
         const columns = [{
@@ -62,8 +56,8 @@ class EntityContainer extends Component {
                             <Icon style={styleIcons} type="delete" className="pointer" />
                         </Popconfirm>
                     </Tooltip>                       
-                    <Tooltip title="Edit Entity">
-                        <Icon style={styleIcons} type="edit" className="pointer" onClick={ () => this.onEdit(record) } />
+                    <Tooltip title="View Entity">
+                        <Icon style={styleIcons} type="info-circle" className="pointer" onClick={ () => this.onOpen(record) } />
                     </Tooltip>  
                 </div>
             ),
@@ -83,11 +77,16 @@ class EntityContainer extends Component {
                     pagination={{ position: 'top' }}
                     dataSource={this.props.listEntities}/>
                 <Modal
-                    title="Edit Entity"
-                    visible={this.state.editing}
-                    okButtonProps={{  text: "Update" }}
-                    onOk={this.handleUpdate}
-                    onCancel={this.handleCancel}
+                    title="Entity Info"
+                    closable={false}
+                    visible={this.state.entityOpen}
+                    onOk={this.handleClose}
+                    onCancel={this.handleClose}
+                    footer={[
+                      <Button key="submit" type="primary" onClick={this.handleClose}>
+                        Close
+                      </Button>,
+                    ]}
                     >
                     <AceEditor
                         style={{height: 350, width: 'auto'}}
