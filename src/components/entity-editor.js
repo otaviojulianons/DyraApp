@@ -22,7 +22,6 @@ class EntityEditor extends Component {
     }
 
     onChange(newValue) {
-        console.log(newValue);
         this.setState({ json: newValue });
     }
 
