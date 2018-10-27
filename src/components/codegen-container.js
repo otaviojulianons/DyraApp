@@ -33,7 +33,7 @@ class CodegenContainer extends Component {
     handleChangeType = (e) => {
         const type = e.target.value;
         const template = '';
-        const itens =  (this.state.type == 'clients') 
+        const itens =  (this.state.type === 'clients') 
                         ? this.props.listClientTemplates 
                         : this.props.listServerTemplates;   
         this.setState({ type, itens, template });

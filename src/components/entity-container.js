@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Table, Modal, Tooltip, Popconfirm, Icon, Button    } from 'antd';
+import { Table, Tooltip, Popconfirm, Icon, Button    } from 'antd';
 import { 
     dynamicEntityGet,
     dynamicEntityByIdDelete,
