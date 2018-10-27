@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Table, Modal, Tooltip, Popconfirm, Icon, Button    } from 'antd';
-import AceEditor from 'react-ace';
-
-import 'brace/mode/json';
-import 'brace/theme/monokai';
 import { 
     dynamicEntityGet,
-    dynamicEntityByIdDelete 
+    dynamicEntityByIdDelete,
+    dynamicEntityPost
 } from '../store/actions/Entity';
+import EntityEditor from './entity-editor';
 
 class EntityContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = { objectSelect: '' };
+        this.state = { entitySelect: '', editorOpen: false };
         this.onDelete = this.onDelete.bind(this);
+        this.handleButtonAction = this.handleButtonAction.bind(this);
+        this.onOpen = this.onOpen.bind(this);
+        this.onAdd = this.onAdd.bind(this);
+        this.handleButtonCancel = this.handleButtonCancel.bind(this);
     }
 
     componentDidMount(){
@@ -28,17 +30,30 @@ class EntityContainer extends Component {
     }
 
     onOpen(entity){
-        this.setState({ objectSelect:entity,entityOpen: true });
+        this.setState({ entitySelect:entity, editorOpen: true, add: false });
     }
 
-    handleClose = (e) => {
-        console.log(e);
-        this.setState({
-            entityOpen: false,
+    onAdd(){
+        var entity = {
+            name:'EntityName',
+            attributes:[
+                {"name":"Id","dataType":"long"},
+                {"name":"Name","dataType":"string","length":"64"},]
+        }
+        this.setState({ entitySelect: entity, editorOpen: true, add: true });
+    }
+
+    handleButtonCancel(json){
+        this.setState({editorOpen: false});
+    }
+
+    handleButtonAction(json){
+        this.props.actiondynamicEntityPost(json).then(() =>{
+            this.setState({editorOpen: false});
+            this.props.actiondynamicEntityGet();
         });
     }
     
-
     render() { 
         const columns = [{
             title: 'Entities',
@@ -53,11 +68,11 @@ class EntityContainer extends Component {
                 <div>
                     <Tooltip title="Delete Entity">
                         <Popconfirm title="Delete Entity?" placement="left" onConfirm={() => this.onDelete(record.id)} okText="Yes" cancelText="No">
-                            <Icon style={styleIcons} type="delete" className="pointer" />
+                            <Icon style={styleIcons} type="delete" className="pointer padding-icon" />
                         </Popconfirm>
                     </Tooltip>                       
                     <Tooltip title="View Entity">
-                        <Icon style={styleIcons} type="info-circle" className="pointer" onClick={ () => this.onOpen(record) } />
+                        <Icon style={styleIcons} type="info-circle" className="pointer padding-icon" onClick={ () => this.onOpen(record) } />
                     </Tooltip>  
                 </div>
             ),
@@ -66,48 +81,23 @@ class EntityContainer extends Component {
         return ( 
             <div style={{paddingTop: 10}}>
                 <div className="col-md-offset-3 col-md-6 col-sm-12">
-
+                 <Button  style={{ zIndex: 10 }} type="primary" onClick={this.onAdd}>Add Entity</Button>
                  <Table
                     size='middle'
-                    style={{ height: 200 }}
+                    style={{ height: 200, marginTop: -42 }}
                     rowKey={record => record.id}
                     loading={this.props.isFetchingEntitiesGet}
                     columns={columns}
                     showHeader={true}
                     pagination={{ position: 'top' }}
                     dataSource={this.props.listEntities}/>
-                <Modal
-                    title="Entity Info"
-                    closable={false}
-                    visible={this.state.entityOpen}
-                    onOk={this.handleClose}
-                    onCancel={this.handleClose}
-                    footer={[
-                      <Button key="submit" type="primary" onClick={this.handleClose}>
-                        Close
-                      </Button>,
-                    ]}
-                    >
-                    <AceEditor
-                        style={{height: 350, width: 'auto'}}
-                        mode="json"
-                        theme="monokai"
-                        name="blah2"
-                        onLoad={this.onLoad}
-                        onChange={this.onChange}
-                        fontSize={14}
-                        showPrintMargin={true}
-                        showGutter={true}
-                        highlightActiveLine={true}
-                        value={JSON.stringify(this.state.objectSelect, null, "\t")}
-                        setOptions={{
-                        enableBasicAutocompletion: false,
-                        enableLiveAutocompletion: false,
-                        enableSnippets: false,
-                        showLineNumbers: true,
-                        tabSize: 2,
-                        }}/>
-                </Modal>
+
+                    <EntityEditor 
+                        onButtonAction={this.handleButtonAction}
+                        onButtonCancel={this.handleButtonCancel}
+                        entity={this.state.entitySelect}
+                        open={this.state.editorOpen}
+                        add={this.state.add}/>
                 </div>
             </div> 
             )
@@ -117,7 +107,6 @@ class EntityContainer extends Component {
 const styleIcons = {
     cursor: 'pointer',
     fontSize: 32,
-    padding: 10,
     float: "right"
 }
 
@@ -129,6 +118,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     actiondynamicEntityGet:() => dispatch(dynamicEntityGet()),
     actiondynamicEntityByIdDelete: id => dispatch(dynamicEntityByIdDelete(id)),
+    actiondynamicEntityPost: entity => dispatch(dynamicEntityPost(entity))
 });
   
  export default connect(

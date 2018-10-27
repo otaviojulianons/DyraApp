@@ -15,7 +15,7 @@ const dynamicEntityPost = (item) => {
       "Content-Type":"application/json"
     }
   };  
-  return axios.post(`${ API_URL }/Dynamic/Entity`,{ item: item },options);
+  return axios.post(`${ API_URL }/Dynamic/Entity`,item ,options);
 }
 
 export {
