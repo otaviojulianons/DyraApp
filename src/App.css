@@ -139,7 +139,32 @@ img.center {
   background-color: #2F3129;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.padding {
+  padding: 24px;
+}
+
+.padding-icon {
+  padding-left: 12px;
+}
+
+.menu-sider {
+  width: 200px;
+  max-width: 200px;
+  min-width: 200px;
+}
+
+
+@media (max-width: 500px) 
+{
+  .padding{
+    padding: 6px;
+   }  
+  .menu-sider {
+    width: 80px;
+    min-width: 80px ;
+    max-width: 80px;
+  }
+  .padding-icon {
+    padding-left: 0px;
+  }  
 }
