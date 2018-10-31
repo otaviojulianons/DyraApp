@@ -38,6 +38,10 @@ img.center {
     margin: 0 auto;
 }
 
+.color-theme {
+  color: rgb(91, 170, 0);
+}
+
 .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
   background-color: rgb(91, 170, 0);
 }

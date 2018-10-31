@@ -7,6 +7,7 @@ import {
     dynamicEntityPost
 } from '../store/actions/Entity';
 import EntityEditor from './entity-editor';
+import { toastr } from 'react-redux-toastr';
 
 class EntityContainer extends Component {
     constructor(props) {

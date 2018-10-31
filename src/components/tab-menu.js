@@ -5,6 +5,8 @@ import SwaggerDoc from './swagger-docs';
 import DataTypeContainer from './datatype-container';
 import CodegenContainer from './codegen-container';
 import Home from './home';
+import Footer from './footer';
+import Header from './header';
 
 const {  Sider, Content } = Layout;
 
@@ -110,6 +112,7 @@ class TabMenu extends Component {
                     </Menu>
                     </Sider>
                     <Layout>
+                        <Header/>
                         <Content style={ contentStyle } className="padding">
                             <div>
                                 <div>
@@ -117,6 +120,7 @@ class TabMenu extends Component {
                                 </div>
                             </div>
                         </Content>
+                        <Footer/>
                     </Layout>
                 </Layout>
             </div>
@@ -127,7 +131,6 @@ class TabMenu extends Component {
 const layoutStyle = {
     top:'0', bottom:'0', left:'0', right:'0', position: 'absolute'
 }
-
 
  
 export default TabMenu;
