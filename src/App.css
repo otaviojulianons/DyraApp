@@ -38,6 +38,10 @@ img.center {
     margin: 0 auto;
 }
 
+.color-theme {
+  color: rgb(91, 170, 0);
+}
+
 .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
   background-color: rgb(91, 170, 0);
 }
@@ -150,7 +154,13 @@ img.center {
 .menu-sider {
   width: 200px;
   max-width: 200px;
-  min-width: 200px;
+  min-width: 80px;
+}
+
+.menu-sider-collapsed {
+  width: 80px;
+  max-width: 80px;
+  min-width: 80px;
 }
 
 

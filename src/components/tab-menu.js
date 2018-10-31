@@ -4,14 +4,18 @@ import EntityContainer from './entity-container';
 import SwaggerDoc from './swagger-docs';
 import DataTypeContainer from './datatype-container';
 import CodegenContainer from './codegen-container';
-// import {isMobile} from 'react-device-detect';
+import Home from './home';
+import Footer from './footer';
+import Header from './header';
 
-const { Header, Sider, Content } = Layout;
+const {  Sider, Content } = Layout;
 
 class TabMenu extends Component {
     constructor(props) {
         super(props);
-        this.state = {  collapsed: false, isMobile: false, current: 'entities' }
+        this.state = {  collapsed: false, isMobile: false, current: 'home' }
+        this.getLogo = this.getLogo.bind(this);
+        this.shouldHideLogo = this.shouldHideLogo.bind(this);
     }
 
     onResize() {
@@ -43,6 +47,8 @@ class TabMenu extends Component {
 
     getContent(){
         switch(this.state.current){
+            case "home":
+                return <Home/>;
             case "entities":
                 return <EntityContainer/>;
             case "datatypes":
@@ -54,6 +60,17 @@ class TabMenu extends Component {
             default:
                 return <div/>;
         }
+    }
+
+    getLogo(){
+        if(this.shouldHideLogo())
+            return <Avatar shape="logo-avatar" size={48} src="./images/icons/icon-96x96.png" shape="square"/>;
+        else
+            return <h1><Avatar shape="logo-avatar" size={48} src="./images/icons/icon-96x96.png" shape="square"/> DyRA</h1>;
+    }
+
+    shouldHideLogo(){
+        return this.state.isMobile || this.state.collapsed;
     }
 
     render() { 
@@ -70,9 +87,13 @@ class TabMenu extends Component {
                         onCollapse={this.toggle}
                     >
                     <div className="logo menu-sider" >
-                        <Avatar shape="logo-avatar" size={48} src="./images/icons/icon-96x96.png" shape="square"/>
+                        { this.getLogo()}
                     </div>
-                    <Menu  className="menu-sider" theme="dark" mode="inline" defaultSelectedKeys={['entities']} onClick={this.handleClick}>
+                    <Menu  className={ this.shouldHideLogo() ? "menu-sider-collapsed" : "menu-sider"} theme="dark" mode="inline" defaultSelectedKeys={['home']} onClick={this.handleClick}>
+                        <Menu.Item key="home">
+                            <Icon type="home" />
+                            <span>Home</span>
+                        </Menu.Item>
                         <Menu.Item key="entities">
                             <Icon type="table" />
                             <span>Entities</span>
@@ -92,10 +113,7 @@ class TabMenu extends Component {
                     </Menu>
                     </Sider>
                     <Layout>
-                        <Header>
-                            <h1>DyRA</h1>
-                            <h4>Dynamic Rest API</h4>
-                        </Header>
+                        <Header/>
                         <Content style={ contentStyle } className="padding">
                             <div>
                                 <div>
@@ -103,6 +121,7 @@ class TabMenu extends Component {
                                 </div>
                             </div>
                         </Content>
+                        <Footer/>
                     </Layout>
                 </Layout>
             </div>
@@ -113,7 +132,6 @@ class TabMenu extends Component {
 const layoutStyle = {
     top:'0', bottom:'0', left:'0', right:'0', position: 'absolute'
 }
-
 
  
 export default TabMenu;
