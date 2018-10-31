@@ -24,7 +24,6 @@ class TabMenu extends Component {
         } else {
             this.setState({ isMobile: false });
         }
-        console.log(window.innerWidth);
       }
 
     componentDidMount(){
@@ -38,10 +37,7 @@ class TabMenu extends Component {
     }
 
     handleClick = (e) => {
-        console.log('click ', e);
-        this.setState({
-          current: e.key,
-        });
+        this.setState({current: e.key});
     }
 
     getContent(){
