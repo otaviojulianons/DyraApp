@@ -11,7 +11,7 @@ import EntityEditor from './entity-editor';
 class EntityContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = { entitySelect: '', editorOpen: false };
+        this.state = { entitySelect: '', editorOpen: false, readme:'' };
         this.onDelete = this.onDelete.bind(this);
         this.handleButtonAction = this.handleButtonAction.bind(this);
         this.onOpen = this.onOpen.bind(this);
