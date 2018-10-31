@@ -76,7 +76,7 @@ class CodegenContainer extends Component {
                                 onChange={this.handleTemplate.bind(this)}
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >   
-                                { this.state.itens.map( item =>  <Option value={item}>{item}</Option> )}
+                                { this.state.itens.map( item =>  <Option value={item} key={item}>{item}</Option> )}
                             </Select> 
                         </FormItem>    
                         <Button 
