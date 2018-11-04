@@ -32,7 +32,6 @@ import {
           method: 'GET',
           responseType: 'blob',
         }).then((response) => {
-          console.log(response);
           FileSaver.saveAs(new Blob([response.data]), type + ".zip");
         });
       }

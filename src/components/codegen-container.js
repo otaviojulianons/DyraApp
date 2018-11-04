@@ -26,7 +26,6 @@ class CodegenContainer extends Component {
     }
 
     handleCodegen = () => {
-        console.log("codegen",this.state.type,this.state.template);
         this.props.actionCodegenPost(this.state.type,this.state.template);
     }
 

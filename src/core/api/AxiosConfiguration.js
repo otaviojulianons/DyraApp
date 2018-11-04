@@ -6,7 +6,6 @@ const AxiosConfiguration = {
     setupInterceptors: () => {
         this.requestInterceptor = axios.interceptors.request.use(
         config => {
-            console.log(config,apiKey);
             const dyraAPI = config.url.includes("localhost") || config.url.includes("dyra");
             if ( apiKey != null && dyraAPI) {
               config.headers.apiKey = apiKey;

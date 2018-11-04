@@ -11,7 +11,6 @@ class App extends Component {
   constructor(){
     super();
     AxiosConfiguration.setupInterceptors();
-    console.log("app",AxiosConfiguration.apiKey);
   }
 
   render() {

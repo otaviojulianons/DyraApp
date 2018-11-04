@@ -32,7 +32,6 @@ const dynamicEntityPostService = async (item) => {
     const response = await dynamicEntityPost(item);
     return response.data;
   } catch (error) {
-    console.log('catch',error.response);
     throw error.response;
   }
 };
