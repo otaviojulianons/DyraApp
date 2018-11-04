@@ -8,7 +8,7 @@ const dynamicSwaggerGetService = async () => {
   try {
     const response = await dynamicSwaggerGet();
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 

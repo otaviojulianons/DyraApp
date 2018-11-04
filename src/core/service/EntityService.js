@@ -14,7 +14,7 @@ const dynamicEntityByIdDeleteService = async (id) => {
     const response = await dynamicEntityByIdDelete(id);
     return response.data;
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 
@@ -23,7 +23,7 @@ const dynamicEntityGetService = async () => {
     const response = await dynamicEntityGet();
     return response.data;
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 
@@ -32,7 +32,8 @@ const dynamicEntityPostService = async (item) => {
     const response = await dynamicEntityPost(item);
     return response.data;
   } catch (error) {
-    throw error;
+    console.log('catch',error.response);
+    throw error.response;
   }
 };
 

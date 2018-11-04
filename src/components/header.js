@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import HeaderButton from './header-button';
+import ApikeyButton from './apikey-button';
+import GithubButton from './github-button';
 
 export default class Header extends Component {
   render() {
     return (
     <div style={layout}>
-        <HeaderButton/>
+        <ApikeyButton {...this.props}/>
+        <GithubButton {...this.props}/>
     </div>
     );
   }
@@ -13,6 +15,6 @@ export default class Header extends Component {
 
 const layout = {
     marginTop: 8,
-    marginBottom: -8
+    marginBottom: -16
 }
 

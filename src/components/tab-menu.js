@@ -7,30 +7,34 @@ import CodegenContainer from './codegen-container';
 import Home from './home';
 import Footer from './footer';
 import Header from './header';
+import AxiosConfiguration from '../core/api/AxiosConfiguration'; 
+import ApikeyModal from './apikey-modal';
 
 const {  Sider, Content } = Layout;
 
 class TabMenu extends Component {
     constructor(props) {
         super(props);
-        this.state = {  collapsed: false, isMobile: false, current: 'home' }
-        this.getLogo = this.getLogo.bind(this);
-        this.shouldHideLogo = this.shouldHideLogo.bind(this);
+        this.state = {  
+            collapsed: false,
+            isMobile: false,
+            current: 'home',
+            isAPIKeyOpen: false,
+            isAPIKeyLocked: false
+        }
     }
 
-    onResize() {
+    componentDidMount(){
+        window.addEventListener("resize", this.onResize);
+    }
+
+    onResize = () =>  {
         if(window.innerWidth < 500) {
           this.setState({ isMobile: true });
         } else {
             this.setState({ isMobile: false });
         }
-        console.log(window.innerWidth);
       }
-
-    componentDidMount(){
-        this.onResize();
-        window.addEventListener("resize", this.onResize.bind(this));
-    }
 
     toggle = () => {
         this.setState({
@@ -38,14 +42,24 @@ class TabMenu extends Component {
         });
     }
 
-    handleClick = (e) => {
-        console.log('click ', e);
-        this.setState({
-          current: e.key,
+    handleMenuClick = (e) => {
+        this.setState({current: e.key});
+    }
+
+    handleAPIKeyClick = () => {
+        this.setState({ isAPIKeyOpen: true});
+    }
+
+    handleAPIKeySubmit = (value) => {
+        AxiosConfiguration.setAPIKey(value);
+
+        this.setState({ 
+            isAPIKeyOpen: false,
+            isAPIKeyLocked: AxiosConfiguration.containsAPIKey()
         });
     }
 
-    getContent(){
+    getContent = () => {
         switch(this.state.current){
             case "home":
                 return <Home/>;
@@ -62,14 +76,14 @@ class TabMenu extends Component {
         }
     }
 
-    getLogo(){
+    getLogo = () => {
         if(this.shouldHideLogo())
             return <Avatar shape="logo-avatar" size={48} src="./images/icons/icon-96x96.png" shape="square"/>;
         else
             return <h1><Avatar shape="logo-avatar" size={48} src="./images/icons/icon-96x96.png" shape="square"/> DyRA</h1>;
     }
 
-    shouldHideLogo(){
+    shouldHideLogo = () => {
         return this.state.isMobile || this.state.collapsed;
     }
 
@@ -89,7 +103,7 @@ class TabMenu extends Component {
                     <div className="logo menu-sider" >
                         { this.getLogo()}
                     </div>
-                    <Menu  className={ this.shouldHideLogo() ? "menu-sider-collapsed" : "menu-sider"} theme="dark" mode="inline" defaultSelectedKeys={['home']} onClick={this.handleClick}>
+                    <Menu  className={ this.shouldHideLogo() ? "menu-sider-collapsed" : "menu-sider"} theme="dark" mode="inline" defaultSelectedKeys={['home']} onClick={this.handleMenuClick}>
                         <Menu.Item key="home">
                             <Icon type="home" />
                             <span>Home</span>
@@ -113,7 +127,10 @@ class TabMenu extends Component {
                     </Menu>
                     </Sider>
                     <Layout>
-                        <Header/>
+                        <Header 
+                            onAPIKeyClick={this.handleAPIKeyClick} 
+                            isMobile={this.state.isMobile}
+                            locked={this.state.isAPIKeyLocked}/>
                         <Content style={ contentStyle } className="padding">
                             <div>
                                 <div>
@@ -121,6 +138,9 @@ class TabMenu extends Component {
                                 </div>
                             </div>
                         </Content>
+                        <ApikeyModal 
+                            onSubmit={this.handleAPIKeySubmit}
+                            open={this.state.isAPIKeyOpen}/>
                         <Footer/>
                     </Layout>
                 </Layout>

@@ -13,7 +13,6 @@ class Home extends Component {
     componentDidMount(){
         Axios.get("https://raw.githubusercontent.com/otaviojulianons/DynamicRestApi/master/README.md")
             .then(response => {
-                console.log(response.data);
                 this.setState( {readme: response.data, loading: false} );
             })
             .catch( err => {

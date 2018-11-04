@@ -16,7 +16,7 @@ const dynamicDataTypeByIdDeleteService = async (id) => {
     const response = await dynamicDataTypeByIdDelete(id);
     return response.data;
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 
@@ -28,7 +28,7 @@ const dynamicDataTypeByIdGetService = async (id) => {
     const response = await dynamicDataTypeByIdGet(id);
     return response.data;
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 
@@ -40,7 +40,7 @@ const dynamicDataTypeByIdPutService = async (id,Id,Name,UseLength) => {
     const response = await dynamicDataTypeByIdPut(id, Id, Name, UseLength);
     return response.data;
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 
@@ -49,7 +49,7 @@ const dynamicDataTypeGetService = async () => {
     const response = await dynamicDataTypeGet();
     return response.data;
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 
@@ -58,7 +58,7 @@ const dynamicDataTypePostService = async (item) => {
     const response = await dynamicDataTypePost(item);
     return response.data;
   } catch (error) {
-    throw error;
+    throw error.response;
   }
 };
 
