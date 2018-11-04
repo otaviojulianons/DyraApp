@@ -10,7 +10,6 @@ const codegenGetServerTypes = () => {
 }
 
 const codegenPost = ( codeGenType, type ) => {
-    console.log(`https://generator.swagger.io/api/gen/${codeGenType}/${type}`);
     return axios.post(
         `https://generator.swagger.io/api/gen/${codeGenType}/${type}`,
         { swaggerUrl: SWAGGER_URL}

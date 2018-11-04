@@ -10,7 +10,7 @@ import {
     try {
       return await codegenGetClientTypes();
     } catch (error) {
-      throw error;
+      throw error.response;
     }
   };
 
@@ -18,7 +18,7 @@ import {
     try {
       return await codegenGetServerTypes();
     } catch (error) {
-      throw error;
+      throw error.response;
     }
   };
   
@@ -38,7 +38,7 @@ import {
       }
       return result;
     } catch (error) {
-      throw error;
+      throw error.response;
     }
   };
   

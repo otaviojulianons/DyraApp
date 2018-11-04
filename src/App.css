@@ -163,6 +163,20 @@ img.center {
   min-width: 80px;
 }
 
+.header-button {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: inline-block;
+  float: right;
+}
+
+.header-link {
+  margin-right: 5px;
+  color: white;
+}
+
 
 @media (max-width: 500px) 
 {

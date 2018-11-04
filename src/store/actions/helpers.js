@@ -47,11 +47,17 @@ const callServiceMiddleware = ({ dispatch, getState }) => next => async (action)
       type: successType,
     }));
   } catch (errorResponse) {
-    const errorMessage = 'Server error.';
+    let errorMessage = 'Server error.';
+
+    try {
+      errorMessage = errorResponse.data.message;
+    } catch (error) {}
+
     dispatch(Object.assign({}, payload, {
       errorMessage,
       type: failureType,
     }));
+
     toastr.error(errorMessage);
   }
 };

@@ -49,8 +49,9 @@ class EntityContainer extends Component {
     }
 
     handleButtonAction(json){
+        this.setState({editorOpen: false});
+
         this.props.actiondynamicEntityPost(json).then(() =>{
-            this.setState({editorOpen: false});
             this.props.actiondynamicEntityGet();
         });
     }
@@ -87,7 +88,7 @@ class EntityContainer extends Component {
                     size='middle'
                     style={{ height: 200, marginTop: -42 }}
                     rowKey={record => record.id}
-                    loading={this.props.isFetchingEntitiesGet}
+                    loading={this.props.isFetchingEntitiesGet || this.props.isExecutingEntityPost || this.props.isExecutingEntityByIdDelete }
                     columns={columns}
                     showHeader={true}
                     pagination={{ position: 'top' }}
@@ -113,6 +114,8 @@ const styleIcons = {
 
 const mapStateToProps = state => ({
     isFetchingEntitiesGet: state.entity.isFetchingEntitiesGet,
+    isExecutingEntityPost: state.entity.isExecutingEntityPost,
+    isExecutingEntityByIdDelete: state.entity.isExecutingEntityByIdDelete,
     listEntities: state.entity.listEntities,
 });
   

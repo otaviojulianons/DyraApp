@@ -5,9 +5,14 @@ import { Provider } from 'react-redux';
 import './App.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import TabMenu from './components/tab-menu';
-
+import AxiosConfiguration from './core/api/AxiosConfiguration'; 
 class App extends Component {
   
+  constructor(){
+    super();
+    AxiosConfiguration.setupInterceptors();
+    console.log("app",AxiosConfiguration.apiKey);
+  }
 
   render() {
     return (
