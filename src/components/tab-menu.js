@@ -26,6 +26,7 @@ class TabMenu extends Component {
 
     componentDidMount(){
         window.addEventListener("resize", this.onResize);
+        this.onResize();
     }
 
     onResize = () =>  {
